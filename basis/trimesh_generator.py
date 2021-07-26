@@ -10,6 +10,29 @@ import basis.robot_math as rm
 import shapely.geometry as shpg
 
 
+# 20210720, duke
+def gen_gate(body=0.5, passage=0.1, thickness=0.1):
+    """
+    :param body:
+    :param passage:
+    :param thickness:
+    :return:
+    author: duke
+    date: 20210718
+    """
+    # gate_body = tp.Box(extents=np.array([body, body, thickness]))
+    gate_body = tp.Cylinder(radius=body, height=thickness, sections=32)
+    # use larger passaage to make a clean cut
+    adjust_mat = np.eye(4)
+    adjust_mat[2, 3] = -thickness
+    gate_passage = tp.Cylinder(radius=passage,
+                               height=thickness*3,
+                               sections=32,
+                               homomat=adjust_mat)
+    gate = trm.boolean.difference([gate_body, gate_passage])
+    return gate
+
+
 def gen_box(extent=np.array([1, 1, 1]), homomat=np.eye(4)):
     """
     :param extent: x, y, z (origin is 0)
