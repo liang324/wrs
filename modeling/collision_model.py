@@ -264,6 +264,21 @@ class CollisionModel(gm.GeometricModel):
         return copy.deepcopy(self)
 
 
+def gen_gate(body=1, passage=0.5, thickness=0.1, rgba=np.array([1, 0, 0, 1])):
+    """
+    :param body:
+    :param passage:
+    :param thickness:
+    :param rgba:
+    :return:
+    author: duke
+    date: 20210721
+    """
+    gate_sgm = gm.gen_gate(body=body, passage=passage, thickness=thickness, rgba=rgba)
+    gate_cm = CollisionModel(gate_sgm)
+    return gate_cm
+
+
 def gen_box(extent=np.array([.1, .1, .1]), homomat=np.eye(4), rgba=np.array([1, 0, 0, 1])):
     """
     :param extent:

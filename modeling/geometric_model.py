@@ -425,6 +425,22 @@ def gen_linesegs(linesegs, thickness=0.001, rgba=[0, 0, 0, 1]):
 #     ls_sgm = StaticGeometricModel(lsnp)
 #     return ls_sgm
 
+# 20210720, duke
+def gen_gate(body=1, passage=0.5, thickness=0.1, rgba=[1, 0, 0, 1]):
+    """
+    :param body:
+    :param passage:
+    :param thickness:
+    :param rgba:
+    :return:
+    author: duke
+    date: 20210718
+    """
+    gate_trm = trihelper.gen_gate(body, passage, thickness)
+    gate_sgm = StaticGeometricModel(gate_trm)
+    gate_sgm.set_rgba(rgba)
+    return gate_sgm
+
 
 def gen_sphere(pos=np.array([0, 0, 0]), radius=0.01, rgba=[1, 0, 0, 1], subdivisions=2):
     """
@@ -461,7 +477,7 @@ def gen_ellipsoid(pos=np.array([0, 0, 0]),
 def gen_stick(spos=np.array([0, 0, 0]),
               epos=np.array([.1, 0, 0]),
               thickness=.005, type="rect",
-              rgba=[1, 0, 0, 1], sections=8):
+              rgba=[1, 0, 0, 1], sections=32):
     """
     :param spos:
     :param epos:
