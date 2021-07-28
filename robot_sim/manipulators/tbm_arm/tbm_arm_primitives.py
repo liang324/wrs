@@ -14,8 +14,8 @@ class TBMArm(mi.ManipulatorInterface):
         self.jlc = jl.JLChain(pos=pos, rotmat=rotmat, homeconf=homeconf, name=name)
 
         link_width = np.zeros(8)
-        link_width[0] = 0.5 
-        link_width[1] = 0.51
+        link_width[0] = 0.5  #base board
+        link_width[1] = 0.51  # waist
         link_width[2] = 0.43
         link_width[3] = 0.41
         link_width[4] = 0.375
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     manipulator_meshmodel = manipulator_instance.gen_meshmodel()
     manipulator_meshmodel.attach_to(base)
 
-    tbm_gate = utils.gen_gate(outer_radius=1.5, inner_radius=0.5, thickness=0.05, pos=np.array([4, 0, 0]),
+    tbm_gate = utils.gen_gate(sec=16, outer_radius=1.5, inner_radius=0.5, thickness=0.05, pos=np.array([4, 0, 0]),
                               pass_vec=np.array([1, 0, 0]), top_vec=np.array([0, 0, 1]))
     # tbm_gate.set_pos(np.array([4, 0, 0]))
     # tbm_gate.set_rotmat(rm.rotmat_from_euler(0, math.pi / 2, 0))

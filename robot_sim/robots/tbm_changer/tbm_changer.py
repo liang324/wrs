@@ -67,6 +67,7 @@ class TBMChanger(ri.RobotInterface):
             self.hold(objcm)
 
     def fix_to(self, pos, rotmat):
+        # ???
         self.pos = pos
         self.rotmat = rotmat
         self.base_plate.fix_to(pos=pos, rotmat=rotmat)
@@ -120,6 +121,7 @@ class TBMChanger(ri.RobotInterface):
             raise NotImplementedError
 
     def jaw_to(self, hnd_name='hnd_s', jawwidth=0.0):
+        # ???
         self.hnd.jaw_to(jawwidth)
 
     def hold(self, hnd_name, objcm, jawwidth=None):
@@ -153,7 +155,7 @@ class TBMChanger(ri.RobotInterface):
 
     def release(self, hnd_name, objcm, jawwidth=None):
         """
-        the objcm is added as a part of the robot_s to the cd checker
+        the objcm is added/removed??? as a part of the robot_s to the cd checker
         :param jawwidth:
         :param objcm:
         :return:
@@ -175,7 +177,7 @@ class TBMChanger(ri.RobotInterface):
                        toggle_tcpcs=False,
                        toggle_jntscs=False,
                        toggle_connjnt=False,
-                       name='xarm7_shuidi_mobile_stickmodel'):
+                       name='tbm???_stickmodel'):
         stickmodel = mc.ModelCollection(name=name)
         self.base_plate.gen_stickmodel(tcp_jntid=tcp_jntid,
                                        tcp_loc_pos=tcp_loc_pos,
@@ -200,7 +202,7 @@ class TBMChanger(ri.RobotInterface):
                       toggle_tcpcs=False,
                       toggle_jntscs=False,
                       rgba=None,
-                      name='xarm_shuidi_mobile_meshmodel'):
+                      name='tbm???_meshmodel'):
         meshmodel = mc.ModelCollection(name=name)
         self.base_plate.gen_meshmodel(tcp_jntid=tcp_jntid,
                                       tcp_loc_pos=tcp_loc_pos,
