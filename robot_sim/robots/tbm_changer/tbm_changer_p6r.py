@@ -8,6 +8,7 @@ import robot_sim.manipulators.tbm_arm.tbm_arm_primitives as tbma
 import robot_sim.end_effectors.grippers.tbm_gripper.tbm_gripper as tbmg
 import robot_sim.robots.robot_interface as ri
 
+manipulator_dof = 7
 
 class TBMChanger(ri.RobotInterface):
 
@@ -79,7 +80,7 @@ class TBMChanger(ri.RobotInterface):
             obj_info['gl_pos'] = gl_pos
             obj_info['gl_rotmat'] = gl_rotmat
 
-    def fk(self, component_name='arm', jnt_values=np.zeros(6)):
+    def fk(self, component_name='arm', jnt_values=np.zeros(manipulator_dof)):
         """
         :param jnt_values: 7 or 3+7, 3=agv, 7=arm, 1=grpr; metrics: meter-radian
         :param component_name: 'arm', 'agv', or 'all'
@@ -102,7 +103,7 @@ class TBMChanger(ri.RobotInterface):
             update_oih(component_name=component_name)
 
         if component_name in self.manipulator_dict:
-            if not isinstance(jnt_values, np.ndarray) or jnt_values.size != 6:
+            if not isinstance(jnt_values, np.ndarray) or jnt_values.size != manipulator_dof:
                 raise ValueError("An 1x6 npdarray must be specified to move the arm!")
             update_component(component_name, jnt_values)
         else:
@@ -232,15 +233,15 @@ if __name__ == '__main__':
     import visualization.panda.world as wd
     import modeling.geometric_model as gm
 
-    base = wd.World(cam_pos=[1.5, 0, 3], lookat_pos=[0, 0, .5])
+    base = wd.World(cam_pos=[0, -5, 5], lookat_pos=[2, 0, 0])
 
     gm.gen_frame().attach_to(base)
     robot_s = TBMChanger(enable_cc=True)
-    # robot_s.jaw_to(.02)
+    # robot_s.jaw_to(.02) # ???
     robot_s.gen_meshmodel(toggle_tcpcs=True).attach_to(base)
     gm.gen_frame().attach_to(base)
-    base.run()
-    tgt_pos = np.array([2.5, .2, .15])
+    # base.run()
+    tgt_pos = np.array([3.5, .5, .15])
     tgt_rotmat = rm.rotmat_from_axangle([0, 1, 0], math.pi / 3)
     gm.gen_frame(pos=tgt_pos, rotmat=tgt_rotmat).attach_to(base)
     # base.run()

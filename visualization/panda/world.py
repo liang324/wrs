@@ -1,5 +1,5 @@
 from panda3d.core import PerspectiveLens, OrthographicLens, AmbientLight, PointLight, Vec4, Vec3, Point3, \
-    WindowProperties, Filename, NodePath, Shader, GraphicsPipe, FrameBufferProperties, GraphicsOutput
+    WindowProperties, Filename, NodePath, Shader, GraphicsPipe, FrameBufferProperties, GraphicsOutput, ClockObject
 from direct.showbase.ShowBase import ShowBase
 import visualization.panda.inputmanager as im
 import visualization.panda.filter as flt
@@ -22,8 +22,8 @@ class World(ShowBase, object):
                  lookat_pos=np.array([0, 0, 0.25]),
                  up=np.array([0, 0, 1]),
                  fov=40,
-                 w=1920,
-                 h=1080,
+                 w=1600,
+                 h=900,
                  lens_type="perspective",
                  toggle_debug=False,
                  auto_cam_rotate=False):
@@ -94,6 +94,8 @@ class World(ShowBase, object):
         # set window size
         props = WindowProperties()
         props.setSize(w, h)
+        # set window position
+        props.setOrigin(50, 150)
         self.win.requestProperties(props)
         # outline edge shader
         # self.set_outlineshader()
@@ -128,6 +130,10 @@ class World(ShowBase, object):
         taskMgr.add(self._external_update, "external_update", appendTask=True)
         # for stationary models
         self._noupdate_model_list = []
+        # fixed frame rate
+        globalClock.setMode(ClockObject.MLimited)
+        globalClock.setFrameRate(60)
+
 
     def _interaction_update(self, task):
         # reset aspect ratio
