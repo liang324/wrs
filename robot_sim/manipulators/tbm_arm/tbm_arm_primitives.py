@@ -21,7 +21,7 @@ class TBMArm(mi.ManipulatorInterface):
         link_width[4] = 0.375
         link_width[5] = 0.26
         link_width[6] = 0.21
-        link_width[7] = 0.275
+        link_width[7] = 0.25
         link2_length = 0.95
         link4_length = 1.1
         link6_length = 0.48
@@ -33,6 +33,7 @@ class TBMArm(mi.ManipulatorInterface):
         self.jlc.jnts[1]['loc_rotmat'] = rm.rotmat_from_euler(0, 0, 0)
         self.jlc.jnts[1]['type'] = 'prismatic'
         self.jlc.jnts[1]['loc_motionax'] = np.array([1, 0, 0])
+        # self.jlc.jnts[1]['motion_rng'] = [0, 3]
 
         self.jlc.jnts[2]['loc_pos'] = np.array([0, 0, 0])
         self.jlc.jnts[2]['loc_motionax'] = np.array([0, 0, 1])
@@ -54,7 +55,7 @@ class TBMArm(mi.ManipulatorInterface):
         self.jlc.jnts[6]['loc_motionax'] = np.array([0, 0, 1])
         self.jlc.jnts[6]['motion_rng'] = [-math.radians(115), math.radians(115)]
 
-        self.jlc.jnts[7]['loc_pos'] = np.array([0, 0, 0])
+        self.jlc.jnts[7]['loc_pos'] = np.array([link6_length, 0, 0])
         self.jlc.jnts[7]['loc_motionax'] = np.array([1, 0, 0])
 
         # links
@@ -125,7 +126,7 @@ class TBMArm(mi.ManipulatorInterface):
         # self.jlc.lnks[6]['mass'] = 0.19
 
         self.jlc.lnks[7]['name'] = "j7"
-        self.jlc.lnks[7]['loc_pos'] = np.array([link6_length, 0, 0])
+        self.jlc.lnks[7]['loc_pos'] = np.array([0, 0, 0])
         self.jlc.lnks[7]['meshfile'] = gm.gen_box(extent=[link_width[7], link_width[7], link_width[7]])
         self.jlc.lnks[7]['rgba'] = [.5, .5, .5, 0.5]
         # self.jlc.lnks[7]['com'] = np.array([.0, .0, 0])
