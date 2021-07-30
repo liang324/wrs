@@ -241,8 +241,8 @@ if __name__ == '__main__':
     robot_s.gen_meshmodel(toggle_tcpcs=True).attach_to(base)
     gm.gen_frame().attach_to(base)
     # base.run()
-    tgt_pos = np.array([3.5, .3, .15])
-    tgt_rotmat = rm.rotmat_from_axangle([0, 1, 0], math.pi / 3)
+    tgt_pos = np.array([5.5, .3, .3])
+    tgt_rotmat = rm.rotmat_from_axangle([0, 0, 1], math.pi / 4)
     gm.gen_frame(pos=tgt_pos, rotmat=tgt_rotmat).attach_to(base)
     # base.run()
     component_name = 'arm'

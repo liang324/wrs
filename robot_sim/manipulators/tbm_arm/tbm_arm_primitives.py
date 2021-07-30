@@ -29,34 +29,42 @@ class TBMArm(mi.ManipulatorInterface):
         slider_base_thickness = 0.05
         slider_base_offset = 0.35
 
+        # 1 base slide
         self.jlc.jnts[1]['loc_pos'] = np.array([0, 0, 0])
-        self.jlc.jnts[1]['loc_rotmat'] = rm.rotmat_from_euler(0, 0, 0)
         self.jlc.jnts[1]['type'] = 'prismatic'
         self.jlc.jnts[1]['loc_motionax'] = np.array([1, 0, 0])
-        # self.jlc.jnts[1]['motion_rng'] = [0, 3]
+        self.jlc.jnts[1]['motion_rng'] = [0, 4]
 
+        # 2 waist
         self.jlc.jnts[2]['loc_pos'] = np.array([0, 0, 0])
         self.jlc.jnts[2]['loc_motionax'] = np.array([0, 0, 1])
         self.jlc.jnts[2]['motion_rng'] = [-math.radians(30), math.radians(30)]
 
+        # 3 roll
         self.jlc.jnts[3]['loc_pos'] = np.array([0, 0, 0])
         self.jlc.jnts[3]['loc_motionax'] = np.array([1, 0, 0])
-        # self.jlc.jnts[3]['motion_rng'] = [-2*math.pi, 2*math.pi]
+        self.jlc.jnts[3]['motion_rng'] = [-math.radians(150), math.radians(150)]
 
+        # 4 picth
         self.jlc.jnts[4]['loc_pos'] = np.array([link2_length, 0, 0])
         self.jlc.jnts[4]['loc_motionax'] = np.array([0, 0, 1])
-        self.jlc.jnts[4]['motion_rng'] = [-math.radians(90), math.radians(90)]
+        self.jlc.jnts[4]['motion_rng'] = [-math.radians(80), math.radians(80)]
 
+        # 5 roll
         self.jlc.jnts[5]['loc_pos'] = np.array([0, 0, 0])
         self.jlc.jnts[5]['loc_motionax'] = np.array([1, 0, 0])
-        # self.jlc.jnts[5]['motion_rng'] = [-2*math.pi, 2*math.pi]
+        self.jlc.jnts[5]['motion_rng'] = [-math.radians(150), math.radians(150)]
 
+        # 6 pitch
         self.jlc.jnts[6]['loc_pos'] = np.array([link4_length, 0, 0])
         self.jlc.jnts[6]['loc_motionax'] = np.array([0, 0, 1])
         self.jlc.jnts[6]['motion_rng'] = [-math.radians(115), math.radians(115)]
 
+        # 7 wrist
         self.jlc.jnts[7]['loc_pos'] = np.array([link6_length, 0, 0])
+        self.jlc.jnts[7]['loc_rotmat'] = rm.rotmat_from_euler(math.pi/2, 0, 0)
         self.jlc.jnts[7]['loc_motionax'] = np.array([1, 0, 0])
+        self.jlc.jnts[7]['motion_rng'] = [-math.radians(170), math.radians(170)]
 
         # links
         self.jlc.lnks[0]['name'] = "sliderbase"
@@ -67,7 +75,7 @@ class TBMArm(mi.ManipulatorInterface):
         # self.jlc.lnks[0]['mass'] = 1.4
         # self.jlc.lnks[0]['com'] = np.array([-.02131, .000002, .044011])
 
-        self.jlc.lnks[1]['name'] = "j1"
+        self.jlc.lnks[1]['name'] = "waist"
         self.jlc.lnks[1]['loc_pos'] = np.array([0, 0, link_width[1] / 2])
         self.jlc.lnks[1]['loc_rotmat'] = rm.rotmat_from_euler(0, math.pi / 2, 0)
         self.jlc.lnks[1]['meshfile'] = gm.gen_stick(spos=np.array([0, 0, 0]),
@@ -75,7 +83,7 @@ class TBMArm(mi.ManipulatorInterface):
                                                     thickness=link_width[1])
         self.jlc.lnks[1]['rgba'] = [.5, .5, .5, 0.5]
 
-        self.jlc.lnks[2]['name'] = "j2"
+        self.jlc.lnks[2]['name'] = "bigarm"
         self.jlc.lnks[2]['loc_pos'] = np.array([link_width[1] / 2, 0, 0])
         cylinder_height = link2_length - link_width[1] / 2 - link_width[3] / 2
         self.jlc.lnks[2]['meshfile'] = gm.gen_stick(spos=np.array([0, 0, 0]),
@@ -85,7 +93,7 @@ class TBMArm(mi.ManipulatorInterface):
         # self.jlc.lnks[2]['com'] = np.array([.0, .0, .15])
         # self.jlc.lnks[2]['mass'] = 1.29
 
-        self.jlc.lnks[3]['name'] = "j3"
+        self.jlc.lnks[3]['name'] = "elbow"
         self.jlc.lnks[3]['loc_pos'] = np.array([link2_length, 0, link_width[3] / 2])
         self.jlc.lnks[3]['loc_rotmat'] = rm.rotmat_from_euler(0, math.pi / 2, 0)
         self.jlc.lnks[3]['meshfile'] = gm.gen_stick(spos=np.array([0, 0, 0]),
@@ -95,7 +103,7 @@ class TBMArm(mi.ManipulatorInterface):
         # self.jlc.lnks[3]['com'] = np.array([-.02, .1, .07])
         # self.jlc.lnks[3]['mass'] = 0.39
 
-        self.jlc.lnks[4]['name'] = "j4"
+        self.jlc.lnks[4]['name'] = "smallarm"
         self.jlc.lnks[4]['loc_pos'] = np.array([link_width[3] / 2, 0, 0])
         cylinder_height = link4_length - link_width[3] / 2 - link_width[5] / 2
         self.jlc.lnks[4]['meshfile'] = gm.gen_stick(spos=np.array([0, 0, 0]),
@@ -140,28 +148,29 @@ class TBMArm(mi.ManipulatorInterface):
 
     def enable_cc(self):
         super().enable_cc()
-        # self.cc.add_cdlnks(self.jlc, [0, 1, 2, 3, 4, 5, 6, 7])
-        # activelist = [self.jlc.lnks[0],
-        #               self.jlc.lnks[1],
-        #               self.jlc.lnks[2],
-        #               self.jlc.lnks[3],
-        #               self.jlc.lnks[4],
-        #               self.jlc.lnks[5],
-        #               self.jlc.lnks[6]]
-        # self.cc.set_active_cdlnks(activelist)
-        # fromlist = [self.jlc.lnks[0],
-        #             self.jlc.lnks[1]]
-        # intolist = [self.jlc.lnks[3],
-        #             self.jlc.lnks[5],
-        #             self.jlc.lnks[6]]
-        # self.cc.set_cdpair(fromlist, intolist)
-        # fromlist = [self.jlc.lnks[2]]
-        # intolist = [self.jlc.lnks[4],
-        #             self.jlc.lnks[5],
-        #             self.jlc.lnks[6]]
-        # self.cc.set_cdpair(fromlist, intolist)
-        # fromlist = [self.jlc.lnks[3]]
-        # intolist = [self.jlc.lnks[6]]
+        self.cc.add_cdlnks(self.jlc, [0, 1, 2, 3, 4, 5, 6, 7])
+        activelist = [self.jlc.lnks[0],
+                      self.jlc.lnks[1],
+                      self.jlc.lnks[2],
+                      self.jlc.lnks[3],
+                      self.jlc.lnks[4],
+                      self.jlc.lnks[5],
+                      self.jlc.lnks[6],
+                      self.jlc.lnks[7]]
+        self.cc.set_active_cdlnks(activelist)
+        fromlist = [self.jlc.lnks[0]]
+        intolist = [self.jlc.lnks[1],
+                    self.jlc.lnks[2],
+                    self.jlc.lnks[3],
+                    self.jlc.lnks[4],
+                    self.jlc.lnks[5],
+                    self.jlc.lnks[6],
+                    self.jlc.lnks[7]]
+        self.cc.set_cdpair(fromlist, intolist)
+        # fromlist = [self.jlc.lnks[1]]
+        # intolist = [self.jlc.lnks[5],
+        #             self.jlc.lnks[6],
+        #             self.jlc.lnks[7]]
         # self.cc.set_cdpair(fromlist, intolist)
 
 
